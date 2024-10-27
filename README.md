@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Tablooo ist eine innovative, Open-Source-Plattform, die speziell für die Bedürfnisse von Restaurants entwickelt wurde. Sie bietet eine umfassende Lösung für Tischreservierungen, Buchungsmanagement und datenbasierte Analysen, um den Betriebsablauf zu vereinfachen und die Gästezufriedenheit zu steigern.
 
-## Getting Started
+Hauptfunktionen
+Reservierungs- und Tischmanagement: Restaurants können sich bei Tablooo registrieren und ein individuelles Profil mit ihren verfügbaren Tischen und Kapazitäten erstellen. Die Plattform unterstützt Echtzeit-Reservierungen, wodurch Doppelbuchungen vermieden und verfügbare Plätze optimal genutzt werden können.
 
-First, run the development server:
+Kundenprofile und Buchungshistorie: Die Plattform speichert Informationen über Kunden, wie Buchungshistorie und besondere Wünsche. Dadurch können Restaurants Stammgäste besser bedienen und personalisierte Erlebnisse schaffen.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Datenanalyse und Berichte: Tablooo bietet tiefgehende Analysen zu Buchungstrends, Stoßzeiten, und Umsätzen. Restaurants können die Auslastung überwachen, Kundenpräferenzen analysieren und datenbasierte Entscheidungen treffen, um den Betrieb effizienter zu gestalten.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Benachrichtigungen und Erinnerungen: Sowohl das Restaurantpersonal als auch die Gäste erhalten automatische Erinnerungen und Benachrichtigungen, um verpasste Termine zu reduzieren und den Workflow zu optimieren.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Anpassbare Open-Source-Architektur: Als Open-Source-Tool ist Tablooo flexibel und erweiterbar. Entwickler können neue Funktionen integrieren, Plugins erstellen und die Plattform genau auf die Bedürfnisse eines Restaurants anpassen.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Ziel
+Mit Tablooo wird das Management von Reservierungen und der Überblick über betriebliche Daten vereinfacht, sodass sich das Restaurantteam auf das Wesentliche – das Gästeerlebnis – konzentrieren kann. Tablooo richtet sich an kleine bis mittelgroße Restaurants, die eine kostengünstige, individuell anpassbare Lösung für ihr Reservierungsmanagement suchen.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
