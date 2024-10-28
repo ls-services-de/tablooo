@@ -186,6 +186,6 @@ button:hover {
 
 .map-container {
   height: 200px; /* oder eine andere Höhe */
-  width: 50%; /* oder eine andere Breite */
+   /* oder eine andere Breite */
   align-items: center;
 }
