@@ -36,7 +36,7 @@ const CompanyPage = async ({ params }) => {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', padding: '20px', maxWidth: '1200px', margin: '0 auto' }} className='text-black'>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
         {/* Company Image */}
         <img
@@ -46,35 +46,39 @@ const CompanyPage = async ({ params }) => {
         />
       </div>
 
-      <h1 style={{ textAlign: 'center', margin: '10px 0' }}>{company.companyName}</h1>
-      <p style={{ textAlign: 'center' }}>{company.address}</p>
+      <h1 style={{ textAlign: 'center', margin: '10px 0' }} className='text-3xl font-semibold'>{company.companyName}</h1>
+      <p style={{ textAlign: 'center' }} className='text-black'>{company.address}</p>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: '20px' }}>
-        {/* Left Section with Map */}
-        <div style={{ flex: 1, marginRight: '20px' }}>
-          <MapComponent address={company.address} companyName={company.companyName} />
-        </div>
+      <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20px', gap: '20px' }}>
+        {/* Flexbox Container */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', md: { flexDirection: 'row' } }}>
+          {/* Left Section with Map */}
+          <div style={{ flex: 1, minWidth: '250px' }} className='mx-auto'>
+            <MapComponent address={company.address} companyName={company.companyName} />
+          </div>
 
-        {/* Right Section with Booking Form and Contact Info */}
-        <div style={{ flex: 1, minWidth: '250px', textAlign: 'left' }}>
-          <BookingForm company={company} openingHours={openingHours} />
-          <div style={{ marginTop: '20px' }}>
-            <p style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
-              <Phone size={20} style={{ marginRight: '8px' }} />
-              {company.phoneNumber}
-            </p>
-            <p style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
-              <Mail size={20} style={{ marginRight: '8px' }} />
-              {company.email}
-            </p>
-            <p style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
-              <MapPin size={20} style={{ marginRight: '8px' }} />
-              {company.address}
-            </p>
+          {/* Right Section with Booking Form and Contact Info */}
+          <div style={{ flex: 1, minWidth: '250px', textAlign: 'left' }}>
+            <BookingForm company={company} openingHours={openingHours} />
+            <div style={{ marginTop: '20px' }}>
+              <p style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
+                <Phone size={20} style={{ marginRight: '8px' }} />
+                {company.phoneNumber}
+              </p>
+              <p style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
+                <Mail size={20} style={{ marginRight: '8px' }} />
+                {company.email}
+              </p>
+              <p style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
+                <MapPin size={20} style={{ marginRight: '8px' }} />
+                {company.address}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   );
 };
 
