@@ -178,8 +178,9 @@ const BookingForm = ({ company, openingHours }) => {
   };
 
   return (
-    <div>
-      <h2>Book a Time Slot</h2>
+    <div className="text-black ">
+      <h2 style={{ textAlign: 'center', margin: '20px 0' }}>Book a Time Slot</h2>
+
       <form onSubmit={handleBooking}>
         <label>
           Select Date:
