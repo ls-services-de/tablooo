@@ -19,9 +19,7 @@ export default function HeroSection() {
           <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
             Jetzt starten
           </button>
-          <button className="bg-transparent hover:bg-white hover:text-orange-500 text-white font-bold py-2 px-4 rounded border border-white transition-colors">
-            Demo anfordern
-          </button>
+          
         </div>
       </div>
     </section>

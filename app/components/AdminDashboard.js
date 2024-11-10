@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Sidebar from './Sidebar'; 
 import OpeningHours from './OpeningHours';
 import Footer from './FooterSection';
+import PageSettingsForm from './SettingForm';
 
 const AdminDashboard = () => {
   const [user, setUser] = useState(null);
@@ -43,7 +44,7 @@ const AdminDashboard = () => {
       case 'brush':
         return <div>Brush Component</div>;
       case 'settings':
-        return <div>Settings Component</div>;
+        return <div><PageSettingsForm /></div>;
       default:
         return <div>Home Component</div>;
     }

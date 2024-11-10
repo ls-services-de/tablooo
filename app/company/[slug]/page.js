@@ -3,6 +3,8 @@ import sanityClient from '@sanity/client';
 import BookingForm from '@/app/components/BookingForm';
 import MapComponent from '@/app/components/MapComponent';
 import { Phone, Mail, MapPin } from 'lucide-react'; // Importing Lucide icons
+import Footer from '@/app/components/FooterSection';
+import imageUrlBuilder from '@sanity/image-url';
 
 const client = sanityClient({
   projectId: 'ptblhmuq',
@@ -11,64 +13,162 @@ const client = sanityClient({
   apiVersion: '2023-11-21',
 });
 
+// Configure the image URL builder
+const builder = imageUrlBuilder(client);
+function urlFor(source) {
+  return builder.image(source).url();
+}
+
 // Fetch the company data
 const fetchCompanyData = async (slug) => {
-  const query = `*[_type == "company" && slug == $slug][0]`;
-  const company = await client.fetch(query, { slug });
-  return company;
+  try {
+    const query = `*[_type == "company" && slug == $slug][0]`;
+    const company = await client.fetch(query, { slug });
+    console.log('Fetched company:', company); // Log fetched company data
+    return company;
+  } catch (error) {
+    console.error('Error fetching company data:', error); // Log any errors
+    return null; // Return null on error
+  }
+};
+
+// Fetch page settings
+const fetchPageSettings = async (companyId) => {
+  try {
+    const query = `*[_type == "pageSettings" && company._ref == $companyId][0]`;
+    const settings = await client.fetch(query, { companyId });
+    console.log('Fetched page settings:', settings); // Log fetched settings data
+    return settings;
+  } catch (error) {
+    console.error('Error fetching page settings:', error); // Log any errors
+    return null; // Return null on error
+  }
 };
 
 // Fetch opening hours for the company
 const fetchOpeningHours = async (companyId) => {
-  const query = `*[_type == "openingHours" && company._ref == $companyId]`;
-  const openingHours = await client.fetch(query, { companyId });
-  return openingHours;
+  try {
+    const query = `*[_type == "openingHours" && company._ref == $companyId]`;
+    const openingHours = await client.fetch(query, { companyId });
+    console.log('Fetched opening hours:', openingHours); // Log fetched opening hours
+    return openingHours;
+  } catch (error) {
+    console.error('Error fetching opening hours:', error); // Log any errors
+    return []; // Return empty array on error
+  }
 };
 
 // Main Company Page Component
 const CompanyPage = async ({ params }) => {
   const { slug } = params; // Get the slug from URL parameters
+  console.log('Page slug:', slug); // Log the slug to check if it's correct
+  
   const company = await fetchCompanyData(slug); // Fetch company data
-  const openingHours = await fetchOpeningHours(company._id); // Fetch opening hours
+  const openingHours = await fetchOpeningHours(company?._id); // Fetch opening hours
+  const settings = await fetchPageSettings(company?._id); // Fetch page settings
 
+  // Check if company data is fetched successfully
   if (!company) {
     return <div>Company not found</div>;
   }
 
+  const mainColor = settings?.mainColor || '#FFA500'; // Default to orange if not found
+  const pageImageUrl = settings?.pageImage ? urlFor(settings.pageImage) : company.imageUrl || 'path/to/fallback/image.jpg'; // Use page image or fallback
+  const reservationDuration = settings?.reservationDuration || 2; // Set this to your desired duration
+
+  // Define styles object
+  const styles = {
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '20px',
+      maxWidth: '1200px',
+      margin: '0 auto',
+      color: mainColor,
+    },
+    imageContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      marginBottom: '20px',
+    },
+    companyName: {
+      textAlign: 'center',
+      margin: '10px 0',
+      color: mainColor,
+    },
+    address: {
+      textAlign: 'center',
+    },
+    flexContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      marginTop: '20px',
+      gap: '20px',
+      '@media (min-width: 768px)': { flexDirection: 'row' },
+    },
+    mapSection: {
+      flex: 1,
+      minWidth: '250px',
+    },
+    bookingSection: {
+      flex: 1,
+      minWidth: '250px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    contactInfo: {
+      display: 'flex',
+      alignItems: 'center',
+      margin: '5px 0',
+      justifyContent: 'center',
+      color: mainColor,
+    },
+    icon: {
+      marginRight: '8px',
+      color: '#FFA500',
+    },
+    button: {
+      color: mainColor,
+    },
+  };
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
+    <div style={styles.container}>
+      <div style={styles.imageContainer}>
         {/* Company Image */}
         <img
-          src={company.imageUrl}
+          src={pageImageUrl}
           alt={company.companyName}
-          style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+          style={{ width: '60%', maxWidth: '300px', height: 'auto', borderRadius: '8px' }}
         />
       </div>
 
-      <h1 style={{ textAlign: 'center', margin: '10px 0' }}>{company.companyName}</h1>
-      <p style={{ textAlign: 'center' }}>{company.address}</p>
+      <h3 className="text-3xl font-semibold text-center text-orange-500" style={styles.companyName}>
+        {company.companyName}
+      </h3>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: '20px' }}>
-        {/* Left Section with Map */}
-        <div style={{ flex: 1, marginRight: '20px' }}>
+      <p style={styles.address} className="text-black">{company.address}</p>
+
+      <div style={styles.flexContainer}>
+        <div style={styles.mapSection} className="mx-auto">
           <MapComponent address={company.address} companyName={company.companyName} />
         </div>
 
-        {/* Right Section with Booking Form and Contact Info */}
-        <div style={{ flex: 1, minWidth: '250px', textAlign: 'left' }}>
-          <BookingForm company={company} openingHours={openingHours} />
+        <div style={styles.bookingSection} className="text-left">
+          <BookingForm company={company} openingHours={openingHours} mainColor={mainColor}   reservationDuration={reservationDuration} />
           <div style={{ marginTop: '20px' }}>
-            <p style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
-              <Phone size={20} style={{ marginRight: '8px' }} />
+            <p style={styles.contactInfo}>
+              <Phone size={20} style={styles.icon} />
               {company.phoneNumber}
             </p>
-            <p style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
-              <Mail size={20} style={{ marginRight: '8px' }} />
+            <p style={styles.contactInfo}>
+              <Mail size={20} style={styles.icon} />
               {company.email}
             </p>
-            <p style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
-              <MapPin size={20} style={{ marginRight: '8px' }} />
+            <p style={styles.contactInfo}>
+              <MapPin size={20} style={styles.icon} />
               {company.address}
             </p>
           </div>

@@ -44,10 +44,11 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
   <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-    <Link href="/" className="text-2xl font-bold text-orange-500">Tablooo</Link>
+    
+    <Link href="/" className="text-2xl font-bold text-orange-500"><img src="/tablooo.png" className="h-[40px]" /></Link>
     <div className="md:hidden">
       <button onClick={toggleMenu} className="text-orange-500">
-        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        {isMenuOpen ? <X size={24} /> : <Menu size={24} className="text-white" />}
       </button>
     </div>
     <ul className={`md:flex md:space-x-4 ${isMenuOpen ? 'block absolute top-full left-0 right-0 bg-white p-4 shadow-md' : 'hidden'} md:static md:shadow-none`}>
