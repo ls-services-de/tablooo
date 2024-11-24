@@ -123,15 +123,13 @@ const CompanyPage = async ({ params }) => {
       alignItems: 'center',
       margin: '5px 0',
       justifyContent: 'center',
-      color: mainColor,
+      color: '#000000',
     },
     icon: {
       marginRight: '8px',
-      color: '#FFA500',
-    },
-    button: {
       color: mainColor,
     },
+    
   };
 
   return (

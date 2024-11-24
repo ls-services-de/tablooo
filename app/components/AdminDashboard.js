@@ -7,6 +7,7 @@ import Sidebar from './Sidebar';
 import OpeningHours from './OpeningHours';
 import Footer from './FooterSection';
 import PageSettingsForm from './SettingForm';
+import LastBookings from './Home';
 
 const AdminDashboard = () => {
   const [user, setUser] = useState(null);
@@ -38,7 +39,7 @@ const AdminDashboard = () => {
   const renderComponent = () => {
     switch (activeComponent) {
       case 'home':
-        return <div>Home Component</div>;
+        return <div><LastBookings /></div>;
       case 'calendar':
         return  <div><OpeningHours /></div>;
       case 'brush':

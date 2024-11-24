@@ -12,11 +12,12 @@ const client = sanityClient({
   dataset: 'production', // Your dataset name
   useCdn: true,
   apiVersion: '2023-11-21', // Use a recent API version
-  token: 'sk1AHHbQ4hcLEiIt9ZOXHW9gZz2lB132R1koYFA48R8EDFNC8ChOk5sHsL5g6SuJ4cFkhilxGqxWFbxlH1RZ5DZRkLC0QaOv7qolsD7JydBVmFX7dRNLZLcDfqlBCbbuFbWUePIokI1LGtVmAi1hdvq9LNEuPCAk8W3BUpj6VcnOGohlmuGD', // Replace with your Sanity token
+  token: 'skqwFLOApVJQigVaZ9ufYOPlSn9ktBOX4EMUCPh2RyhrFOoiAcrPrvg9ZraTH8jUkxecSKjv3SJMzk71V8gCwW3fl1YEnglzylQFUGSYMxLAZEGahhYJtk3IwkD8Y5qLjQB3EKoN4O3qAsJQodT2nhgY72zrrE99Z8QzxKI008iA9X37UkUh', // Replace with your Sanity token
 });
 
 // Function to save a booking
 const saveBooking = async (bookingData) => {
+  console.log("Booking data to be saved:", bookingData);
   try {
     await client.create({
       _type: 'booking', // Ensure this matches your Sanity schema
@@ -251,7 +252,14 @@ const BookingForm = ({ company, openingHours }) => {
           />
         </label>
       </div>
-      <button  type="submit">Buchung abschicken</button>
+      <button
+  className="bg-white text-black border-2 border-black hover:bg-black hover:text-white transition-colors duration-300 ease-in-out"
+  type="submit"
+>
+  Buchung abschicken
+</button>
+
+
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </form>
   );
