@@ -67,10 +67,7 @@ export default function LastBookings() {
       <div className="w-1/2 bg-gray-50 p-4 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Anleitung</h2>
         <p className="text-gray-600">
-          Hier findest du die nächsten Buchungen deines Unternehmens. Die Buchungen sind nach
-          Datum sortiert, mit der nächsten Buchung oben. Wenn du eine detaillierte Übersicht
-          zu einer bestimmten Buchung benötigst, klicke auf die entsprechende Buchung, um
-          weitere Informationen zu sehen.
+          1. Erstellen Sie ein Konto
         </p>
         <p className="text-gray-600 mt-4">
           Für weitere Informationen oder Fragen, wende dich bitte an den Support.
