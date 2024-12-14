@@ -199,7 +199,7 @@ const BookingForm = ({ company, openingHours }) => {
   };
 
   return (
-    <form onSubmit={handleBooking}>
+    <form onSubmit={handleBooking} className='text-black'>
       <h3>Datum auswählen:</h3>
       <DatePicker
         selected={selectedDate}

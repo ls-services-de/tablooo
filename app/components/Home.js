@@ -13,13 +13,14 @@ const client = createClient({
 
 export default function LastBookings() {
   const [bookings, setBookings] = useState([])
+
   const [loading, setLoading] = useState(true)
 
-  // Hole die nächsten Buchungen aus der Sanity-Datenbank, die in der Zukunft liegen
+  // Hole die nächsten Buchungen aus der Sanity-Datenbank
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const now = new Date().toISOString() // Aktuelles Datum im ISO-Format
+        const now = new Date().toISOString()
         const response = await client.fetch(`
           *[_type == "booking" && date > "${now}"] | order(date asc) {
             _id,
@@ -40,12 +41,15 @@ export default function LastBookings() {
     fetchBookings()
   }, [])
 
+  // Hole die Firma aus Sanity anhand der companyId aus localStorage
+ 
+
   if (loading) return <p className="text-center py-4">Lädt...</p>
 
   return (
-    <div className="flex space-x-8 p-4 bg-white rounded-lg shadow-lg">
+    <div className="p-4 bg-white rounded-lg shadow-lg space-y-8">
       {/* Kasten für die Buchungen */}
-      <div className="w-1/2">
+      <div>
         <h2 className="text-xl font-semibold mb-4">Zukünftige Buchungen</h2>
         <div className="space-y-4">
           {bookings.length === 0 ? (
@@ -63,19 +67,7 @@ export default function LastBookings() {
         </div>
       </div>
 
-      {/* Kasten für die Anleitung */}
-      <div className="w-1/2 bg-gray-50 p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Anleitung</h2>
-        <p className="text-gray-600">
-          Hier findest du die nächsten Buchungen deines Unternehmens. Die Buchungen sind nach
-          Datum sortiert, mit der nächsten Buchung oben. Wenn du eine detaillierte Übersicht
-          zu einer bestimmten Buchung benötigst, klicke auf die entsprechende Buchung, um
-          weitere Informationen zu sehen.
-        </p>
-        <p className="text-gray-600 mt-4">
-          Für weitere Informationen oder Fragen, wende dich bitte an den Support.
-        </p>
-      </div>
+      
     </div>
   )
 }

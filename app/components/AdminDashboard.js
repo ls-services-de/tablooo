@@ -8,6 +8,7 @@ import OpeningHours from './OpeningHours';
 import Footer from './FooterSection';
 import PageSettingsForm from './SettingForm';
 import LastBookings from './Home';
+import Anleitung from './Anleitung';
 
 const AdminDashboard = () => {
   const [user, setUser] = useState(null);
@@ -43,11 +44,11 @@ const AdminDashboard = () => {
       case 'calendar':
         return  <div><OpeningHours /></div>;
       case 'brush':
-        return <div>Brush Component</div>;
-      case 'settings':
         return <div><PageSettingsForm /></div>;
+      case 'settings':
+        return <div><Anleitung /></div>;
       default:
-        return <div>Home Component</div>;
+        return <div><LastBookings /></div>;
     }
   };
 

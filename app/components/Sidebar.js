@@ -1,5 +1,5 @@
 // app/components/Sidebar.js
-import { House, Calendar, Brush, Settings } from 'lucide-react';
+import { House, Calendar, Brush, Settings, BookOpen } from 'lucide-react';
 
 const Sidebar = ({ onIconClick }) => {
   return (
@@ -23,7 +23,7 @@ const Sidebar = ({ onIconClick }) => {
         <Brush size={24} />
       </div>
       <div onClick={() => onIconClick('settings')} className="p-4 cursor-pointer text-orange-500 hover:text-orange-700">
-        <Settings size={24} />
+        <BookOpen size={24} />
       </div>
     </div>
   );
