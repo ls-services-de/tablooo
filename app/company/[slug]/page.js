@@ -73,7 +73,7 @@ const CompanyPage = async ({ params }) => {
   }
 
   const mainColor = settings?.mainColor || '#FFA500'; // Default to orange if not found
-  const pageImageUrl = settings?.pageImage ? urlFor(settings.pageImage) : company.imageUrl || 'path/to/fallback/image.jpg'; // Use page image or fallback
+  
   const reservationDuration = settings?.reservationDuration || 2; // Set this to your desired duration
 
   // Define styles object
@@ -133,15 +133,7 @@ const CompanyPage = async ({ params }) => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.imageContainer}>
-        {/* Company Image */}
-        <img
-          src={pageImageUrl}
-          alt={company.companyName}
-          style={{ width: '60%', maxWidth: '300px', height: 'auto', borderRadius: '8px' }}
-        />
-      </div>
+  
 
       <h3 className="text-3xl font-semibold text-center text-orange-500" style={styles.companyName}>
         {company.companyName}
