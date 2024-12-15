@@ -132,8 +132,8 @@ const CompanyPage = async ({ params }) => {
     
   };
 
-  return (
-  
+ return (
+  <>
 
       <h3 className="text-3xl font-semibold text-center text-orange-500" style={styles.companyName}>
         {company.companyName}
@@ -163,8 +163,9 @@ const CompanyPage = async ({ params }) => {
             </p>
           </div>
         </div>
-      </div>
-    </div>
+        </div>
+      
+    </>
   );
 };
 
