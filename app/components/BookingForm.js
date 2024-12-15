@@ -69,17 +69,27 @@ const BookingForm = ({ company, openingHours }) => {
 
   useEffect(() => {
     const fetchSettings = async () => {
-      const settings = await client.fetch(`*[_type == "pageSettings"][0]{
-        numberOfTables,
-        reservationDuration
-      }`);
-      if (settings) {
-        setNumberOfTables(settings.numberOfTables || 1);
-        setReservationDuration(parseFloat(settings.reservationDuration.replace(',', '.')) || 1.5);
+      try {
+        const settings = await client.fetch(
+          `*[_type == "pageSettings" && company._ref == $companyId][0]{
+            numberOfTables,
+            reservationDuration
+          }`,
+          { companyId: company._id } // Filter mit der company-ID
+        );
+  
+        if (settings) {
+          setNumberOfTables(settings.numberOfTables || 1);
+          setReservationDuration(parseFloat(settings.reservationDuration.replace(',', '.')) || 1.5);
+        }
+      } catch (error) {
+        console.error("Fehler beim Abrufen der Einstellungen:", error);
       }
     };
+  
     fetchSettings();
-  }, []);
+  }, [company._id]);
+  
 
   // Mapping of English day names to German
   const dayNameMapping = {
@@ -116,53 +126,43 @@ const BookingForm = ({ company, openingHours }) => {
         const start = new Date(bookingDate.setHours(openHour, openMinute, 0, 0));
         const end = new Date(bookingDate.setHours(closeHour, closeMinute, 0, 0));
   
-        const breakStartTime = new Date(bookingDate.setHours(...openingHour.breakStart.split(':').map(Number), 0));
-        const breakEndTime = new Date(bookingDate.setHours(...openingHour.breakEnd.split(':').map(Number), 0));
+        const breakStartTime = openingHour.breakStart
+          ? new Date(bookingDate.setHours(...openingHour.breakStart.split(':').map(Number), 0))
+          : null;
+        const breakEndTime = openingHour.breakEnd
+          ? new Date(bookingDate.setHours(...openingHour.breakEnd.split(':').map(Number), 0))
+          : null;
   
         const times = [];
-        
-        // First, handle slots before the break
-        while (start < breakStartTime) {
-          const formattedTime = format(new Date(start), 'yyyy-MM-dd HH:mm');
-          const endTime = new Date(start.getTime() + reservationDuration * 60 * 60 * 1000);
-          const bookedCount = existingBookings.filter(b => b === formattedTime).length;
   
-          const availableSeats = numberOfTables - bookedCount;
-  
-          if (availableSeats > 0) {
-            times.push({
-              time: formattedTime,
-              available: availableSeats,
-            });
-          }
-  
-          start.setHours(start.getHours() + reservationDuration); // Increment by reservation duration
-        }
-  
-        // Now handle slots after the break
-        start.setTime(breakEndTime.getTime()); // Set start to breakEndTime for the next part
         while (start < end) {
           const formattedTime = format(new Date(start), 'yyyy-MM-dd HH:mm');
           const endTime = new Date(start.getTime() + reservationDuration * 60 * 60 * 1000);
-          const bookedCount = existingBookings.filter(b => b === formattedTime).length;
   
-          const availableSeats = numberOfTables - bookedCount;
+          // Überspringe Pausenzeiten
+          if (
+            (!breakStartTime || start < breakStartTime || start >= breakEndTime) &&
+            endTime <= end
+          ) {
+            const bookedCount = existingBookings.filter((b) => b === formattedTime).length;
+            const availableSeats = numberOfTables - bookedCount;
   
-          // Only add time slots that are not during the break
-          if (availableSeats > 0) {
-            times.push({
-              time: formattedTime,
-              available: availableSeats,
-            });
+            if (availableSeats > 0) {
+              times.push({
+                time: formattedTime,
+                available: availableSeats,
+              });
+            }
           }
   
-          start.setHours(start.getHours() + reservationDuration); // Increment by reservation duration
+          start.setHours(start.getHours() + reservationDuration); // Inkrementiere basierend auf Reservierungsdauer
         }
   
         setAvailableSlots(times);
       }
     }
   }, [selectedDate, openingHours, existingBookings, numberOfTables, reservationDuration]);
+  
   
   
 
