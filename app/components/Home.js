@@ -13,23 +13,36 @@ const client = createClient({
 
 export default function LastBookings() {
   const [bookings, setBookings] = useState([])
-
   const [loading, setLoading] = useState(true)
 
-  // Hole die nächsten Buchungen aus der Sanity-Datenbank
   useEffect(() => {
     const fetchBookings = async () => {
       try {
+        // Hole die Daten aus dem localStorage
+        const userData = JSON.parse(localStorage.getItem('user'))
+        if (!userData || !userData.companyId) {
+          console.error('companyId not found in localStorage.')
+          setLoading(false)
+          return
+        }
+
+        const companyId = userData.companyId // Zugriff auf companyId
         const now = new Date().toISOString()
-        const response = await client.fetch(`
-          *[_type == "booking" && date > "${now}"] | order(date asc) {
+
+        // Sanity-Abfrage mit Filterung nach company._ref
+        const response = await client.fetch(
+          `*[_type == "booking" && company._ref == $companyId && date > $now] | order(date asc) {
             _id,
             customerName,
             customerEmail,
             date,
             duration
-          }
-        `)
+          }`,
+          { now, companyId } // Query-Parameter
+        )
+
+        console.log('Fetched Bookings:', response) // Protokolliere die Buchungen in der Konsole
+
         setBookings(response)
         setLoading(false)
       } catch (error) {
@@ -40,9 +53,6 @@ export default function LastBookings() {
 
     fetchBookings()
   }, [])
-
-  // Hole die Firma aus Sanity anhand der companyId aus localStorage
- 
 
   if (loading) return <p className="text-center py-4">Lädt...</p>
 
@@ -66,8 +76,6 @@ export default function LastBookings() {
           )}
         </div>
       </div>
-
-      
     </div>
   )
 }
