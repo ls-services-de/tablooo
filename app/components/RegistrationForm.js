@@ -71,7 +71,7 @@ const RegistrationForm = () => {
     <form onSubmit={handleSubmit}>
       <h1>Registrierung</h1>
       <input name="companyName" type="text" placeholder="Company Name" onChange={handleChange} required />
-      <input name="website" type="url" placeholder="Website" onChange={handleChange} required />
+      <input name="website" type="text" placeholder="Website" onChange={handleChange} required />
       <input name="ownerName" type="text" placeholder="Owner Name" onChange={handleChange} required />
       <input name="address" type="text" placeholder="Address" onChange={handleChange} required />
       <input name="phoneNumber" type="tel" placeholder="Phone Number" onChange={handleChange} required />
