@@ -1,5 +1,6 @@
 // components/PricingSection.js
 import { Check } from "lucide-react";
+import Link from "next/link";
 
 export default function PricingSection() {
   return (
@@ -29,11 +30,11 @@ export default function PricingSection() {
               </li>
               <li className="mb-2 flex items-center">
                 <Check size={16} className="text-green-500 mr-2" />
-                Tischanzahl und Styling-Möglichketen
+                Tischanzahl und Styling-Möglichkeiten
               </li>
             </ul>
             <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
-              Jetzt anmelden
+             <Link href="/registrierung"> Jetzt anmelden</Link>
             </button>
           </div>
           <div className="bg-gray-100 max-w-[66%] p-6 rounded-lg shadow-md flex flex-col text-center">
