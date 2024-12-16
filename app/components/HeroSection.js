@@ -1,5 +1,6 @@
 // components/HeroSection.js
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -17,7 +18,7 @@ export default function HeroSection() {
         <p className="text-lg md:text-xl mb-8">Unser fortschrittliches Buchungssystem hilft Ihnen, Ihre Tischreservierungen effizient zu verwalten und Ihren Umsatz zu steigern.</p>
         <div className="space-x-4">
           <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
-            Jetzt starten
+          <Link href="/registrierung">Jetzt starten</Link>
           </button>
           
         </div>
